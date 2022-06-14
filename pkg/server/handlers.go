@@ -9,7 +9,9 @@ import (
 	"github.com/ariel17/nirvana-assessment/pkg/services"
 )
 
-// CoalesceHandler TODO
+// CoalesceHandler takes a member_id parameter to pass thru external APIs. It
+// validates the correctness of input and response values, returning correct
+// status codes.
 func CoalesceHandler(c *gin.Context) {
 	memberIDString := c.Query("member_id")
 	if memberIDString == "" {

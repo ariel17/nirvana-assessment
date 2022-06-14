@@ -6,6 +6,8 @@ import (
 
 type API func(int) (*Response, error)
 
+// CoalesceAPIResponses collects external API responses in async way to coalesce
+// the result into a single response based on the configured strategy.
 func CoalesceAPIResponses(memberID int) (*Response, error) {
 	apis := []API{GetAPI1, GetAPI2, GetAPI3}
 	inputChan := make(chan API, len(apis))
