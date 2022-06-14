@@ -13,11 +13,11 @@ import (
 )
 
 func TestCoalesceHandler(t *testing.T) {
-	testCases := []struct{
-		name string
-		url string
+	testCases := []struct {
+		name       string
+		url        string
 		statusCode int
-		response *services.Response
+		response   *services.Response
 	}{
 		{"correct member_id", "/?member_id=1", http.StatusOK, &services.Response{1066, 11000, 5666}},
 		{"empty member_id", "/", http.StatusBadRequest, nil},

@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	productionEnv = "production"
+	productionEnv  = "production"
 	environmentKey = "ENVIRONMENT"
 )
 

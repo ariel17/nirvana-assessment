@@ -1,10 +1,10 @@
 package services
 
 import (
-	configs "github.com/ariel17/nirvana-assessment/pkg/configs"
+	"github.com/ariel17/nirvana-assessment/pkg/configs"
 )
 
-type API func(int)(*Response, error)
+type API func(int) (*Response, error)
 
 func CoalesceAPIResponses(memberID int) (*Response, error) {
 	apis := []API{GetAPI1, GetAPI2, GetAPI3}
@@ -57,7 +57,7 @@ func newStrategy() strategy {
 	return &sumStrategy{}
 }
 
-type averageStrategy struct {}
+type averageStrategy struct{}
 
 func (as *averageStrategy) Coalesce(responses []*Response) *Response {
 	var deductible, stopLoss, oopMax int
@@ -67,13 +67,13 @@ func (as *averageStrategy) Coalesce(responses []*Response) *Response {
 		oopMax += r.OopMax
 	}
 	return &Response{
-		Deductible: deductible/len(responses),
-		StopLoss: stopLoss/len(responses),
-		OopMax: oopMax/len(responses),
+		Deductible: deductible / len(responses),
+		StopLoss:   stopLoss / len(responses),
+		OopMax:     oopMax / len(responses),
 	}
 }
 
-type sumStrategy struct {}
+type sumStrategy struct{}
 
 func (as *sumStrategy) Coalesce(responses []*Response) *Response {
 	var deductible, stopLoss, oopMax int
@@ -84,7 +84,7 @@ func (as *sumStrategy) Coalesce(responses []*Response) *Response {
 	}
 	return &Response{
 		Deductible: deductible,
-		StopLoss: stopLoss,
-		OopMax: oopMax,
+		StopLoss:   stopLoss,
+		OopMax:     oopMax,
 	}
 }

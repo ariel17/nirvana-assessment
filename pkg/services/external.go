@@ -15,27 +15,27 @@ type Response struct {
 }
 
 // GetAPI1 returns a mocked external API response as #1.
-func GetAPI1(memberID int) (*Response, error){
+func GetAPI1(memberID int) (*Response, error) {
 	return getAPI(1000, 10000, 5000)
 }
 
 // GetAPI2 returns a mocked external API response as #2.
-func GetAPI2(memberID int) (*Response, error){
+func GetAPI2(memberID int) (*Response, error) {
 	return getAPI(1200, 13000, 6000)
 }
 
 // GetAPI3 returns a mocked external API response as #3.
-func GetAPI3(memberID int) (*Response, error){
+func GetAPI3(memberID int) (*Response, error) {
 	return getAPI(1000, 10000, 6000)
 }
 
 func getAPI(deductible, stopLoss, oopMax int) (*Response, error) {
 	rand.Seed(time.Now().UnixNano())
 	n := rand.Intn(configs.MaxMockedResponseTimeInMillis)
-	time.Sleep(time.Duration(n)*time.Millisecond)
+	time.Sleep(time.Duration(n) * time.Millisecond)
 	return &Response{
 		Deductible: deductible,
-		StopLoss: stopLoss,
-		OopMax: oopMax,
+		StopLoss:   stopLoss,
+		OopMax:     oopMax,
 	}, nil
 }

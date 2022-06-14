@@ -10,11 +10,6 @@ import (
 )
 
 // CoalesceHandler TODO
-// @Summary Shows the status of the application.
-// @Description TODO
-// @Accept json
-// @Produce json
-// @Router / [get]
 func CoalesceHandler(c *gin.Context) {
 	memberIDString := c.Query("member_id")
 	if memberIDString == "" {
