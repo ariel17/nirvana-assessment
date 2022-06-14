@@ -12,7 +12,7 @@ import (
 func TestGetAPI(t *testing.T) {
 	testCases := []struct{
 		name string
-		f func(int) (Response, error)
+		f func(int) (*Response, error)
 		expected Response
 	}{
 		{"api 1", GetAPI1, Response{1000, 10000, 5000}},
@@ -28,7 +28,7 @@ func TestGetAPI(t *testing.T) {
 
 			assert.Nil(t, err)
 			assert.LessOrEqual(t, time.Duration(configs.MaxMockedResponseTimeInMillis), duration)
-			assert.Equal(t, tc.expected, response)
+			assert.Equal(t, tc.expected, *response)
 		})
 	}
 }
