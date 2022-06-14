@@ -1,6 +1,7 @@
 package services
 
 import (
+	"errors"
 	"math/rand"
 	"time"
 
@@ -30,6 +31,9 @@ func GetAPI3(memberID int) (*Response, error) {
 }
 
 func getAPI(deductible, stopLoss, oopMax int) (*Response, error) {
+	if configs.ShouldAPIFail {
+		return nil, errors.New("mocked error")
+	}
 	rand.Seed(time.Now().UnixNano())
 	n := rand.Intn(configs.MaxMockedResponseTimeInMillis)
 	time.Sleep(time.Duration(n) * time.Millisecond)

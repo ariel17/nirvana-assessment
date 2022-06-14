@@ -36,12 +36,19 @@ func CoalesceAPIResponses(memberID int) (*Response, error) {
 	close(inputChan)
 
 	// collecting async data
-	var responses []*Response
+	var (
+		responses []*Response
+		lastErr error
+	)
 	for range apis {
 		if err := <-errorsChan; err != nil {
-			return nil, err
+			lastErr = err
 		}
 		responses = append(responses, <-responsesChan)
+	}
+
+	if lastErr != nil {
+		return nil, lastErr
 	}
 
 	s := newStrategy()

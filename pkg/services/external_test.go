@@ -9,7 +9,7 @@ import (
 	"github.com/ariel17/nirvana-assessment/pkg/configs"
 )
 
-func TestGetAPI(t *testing.T) {
+func TestGetAPI_N(t *testing.T) {
 	testCases := []struct{
 		name string
 		f func(int) (*Response, error)
@@ -22,6 +22,7 @@ func TestGetAPI(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
+			configs.ShouldAPIFail = false
 			start := time.Now()
 			response, err := tc.f(0)
 			duration := time.Since(start)
@@ -31,4 +32,14 @@ func TestGetAPI(t *testing.T) {
 			assert.Equal(t, tc.expected, *response)
 		})
 	}
+}
+
+func TestGetAPIFail(t *testing.T) {
+	configs.ShouldAPIFail = true
+	defer func() {
+		configs.ShouldAPIFail = false
+	}()
+
+	_, err := getAPI(0, 0, 0)
+	assert.NotNil(t, err)
 }

@@ -36,18 +36,26 @@ func TestCoalesceAPIResponses(t *testing.T) {
 	testCases := []struct{
 		name string
 		strategy string
-		expected Response
+		expected *Response
+		successful bool
 	}{
-		{"average", configs.AverageCoalesceStrategy, Response{1066, 11000, 5666}},
-		{"sum", configs.SumCoalesceStrategy, Response{3200, 33000, 17000}},
+		{"average", configs.AverageCoalesceStrategy, &Response{1066, 11000, 5666}, true},
+		{"sum", configs.SumCoalesceStrategy, &Response{3200, 33000, 17000}, true},
+		{"sum but api fails", configs.SumCoalesceStrategy, nil, false},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
+			configs.ShouldAPIFail = !tc.successful
 			configs.CoalesceStrategyToUse = tc.strategy
 			r, err := CoalesceAPIResponses(0)
-			assert.Nil(t, err)
-			assert.Equal(t, tc.expected, *r)
+			if tc.successful {
+				assert.Nil(t, err)
+				assert.Equal(t, *tc.expected, *r)
+			} else {
+				assert.Nil(t, r)
+				assert.NotNil(t, err)
+			}
 		})
 	}
 }

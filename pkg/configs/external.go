@@ -9,4 +9,5 @@ const (
 
 var (
 	CoalesceStrategyToUse = AverageCoalesceStrategy
+	ShouldAPIFail = false
 )
